@@ -9,7 +9,7 @@ export const load = (async ({params}) => {
 }) satisfies PageServerLoad
 
 
-async function getSecretsFromServer() {
+async function getSecretsFromServer(): Promise<Response> {
     return fetch("http://localhost:8080/secret")
 }
 
