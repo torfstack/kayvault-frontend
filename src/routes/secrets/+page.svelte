@@ -2,7 +2,8 @@
     import type { PageData } from './$types'
 
     export let data: PageData;
-    let value: string;
+    let value: string = "";
+    $: shown = data.secrets.filter((s: string) => s.indexOf(value) != -1)
 
     function uploadSecret(secret: string) {
         fetch("http://localhost:8080/secret", {
@@ -49,7 +50,7 @@
         <input bind:value type="text" placeholder="Add/Search Secrets" name="New Secret" on:keypress={handleKeydown}>
     </div>
     <div class="secrets">
-        {#each data.secrets as secret}
+        {#each shown as secret}
             <p>{secret}</p>
         {/each}
     </div>
