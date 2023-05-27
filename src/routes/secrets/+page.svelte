@@ -1,8 +1,7 @@
 <script lang="ts">
-    import type { PageServerData } from './$types'
+    import type { PageData } from './$types'
 
-    export let data: PageServerData;
-    let shown: Promise<string> = Promise.resolve(data.text)
+    export let data: PageData;
     let value: string;
 
     function uploadSecret(secret: string) {
@@ -18,9 +17,8 @@
                 key: "something"
             })
         })
-            .then(resp => {
-                shown = resp.text()
-            })
+            .then(resp => resp.json())
+            .then(body => data = { secrets: body })
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -35,16 +33,24 @@
         width: 80%;
         padding: 12px 20px;
         margin: 8px 0;
-        border-radius: 8px;
+        font-weight: 300;
+    }
+    .input {
+        text-align: center;
+    }
+    .secrets {
+        text-align: center;
     }
 </style>
 
 <html lang="en">
-    {#await shown}
-    <p>Loading your secrets...</p>
-    {:then secrets}
-    <p>Manage your secrets {secrets}<p>
-    {/await}
-
-    <input bind:value type="text" placeholder="Add Secret" name="New Secret" on:keypress={handleKeydown}>
+    <h1>Manage your secrets</h1>
+    <div class="input">
+        <input bind:value type="text" placeholder="Add/Search Secrets" name="New Secret" on:keypress={handleKeydown}>
+    </div>
+    <div class="secrets">
+        {#each data.secrets as secret}
+            <p>{secret}</p>
+        {/each}
+    </div>
 </html>

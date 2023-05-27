@@ -1,12 +1,12 @@
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
 
 export const load = (async () => {
     const resp = await getSecretsFromServer()
-    const text = await resp.text()
+    const text = await resp.json()
     return {
-        text: text
+        secrets: text
     };
-}) satisfies PageServerLoad
+}) satisfies PageLoad
 
 
 async function getSecretsFromServer(): Promise<Response> {
