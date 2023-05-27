@@ -2,6 +2,7 @@
     import type { PageServerData } from './$types'
 
     export let data: PageServerData;
+    let shown: Promise<string> = Promise.resolve(data.text)
     let value: string;
 
     function uploadSecret(secret: string) {
@@ -16,7 +17,10 @@
                 value: secret,
                 key: "something"
             })
-        });
+        })
+            .then(resp => {
+                shown = resp.text()
+            })
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -36,7 +40,11 @@
 </style>
 
 <html lang="en">
-    <p>Manage your secrets {data.text}</p>
+    {#await shown}
+    <p>Loading your secrets...</p>
+    {:then secrets}
+    <p>Manage your secrets {secrets}<p>
+    {/await}
 
     <input bind:value type="text" placeholder="Add Secret" name="New Secret" on:keypress={handleKeydown}>
 </html>
