@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({params}) => {
+export const load = (async () => {
     const resp = await getSecretsFromServer()
     const text = await resp.text()
     return {
@@ -12,6 +12,3 @@ export const load = (async ({params}) => {
 async function getSecretsFromServer(): Promise<Response> {
     return fetch("http://localhost:8080/secret")
 }
-
-
-
