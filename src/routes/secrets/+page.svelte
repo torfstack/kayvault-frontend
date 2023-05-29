@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types'
+    import { fade } from 'svelte/transition';
 
     export let data: PageData;
     let value: string = "";
@@ -51,7 +52,7 @@
     </div>
     <div class="secrets">
         {#each shown as secret}
-            <p>{secret}</p>
+            <p transition:fade="{{ duration: 200 }}">{secret}</p>
         {/each}
     </div>
 </html>
