@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createUserWithEmailAndPassword } from "firebase/auth";
-    import { auth } from "$lib/auth.ts"
+    import { auth } from "../lib/auth"
 
     let email: string = "";
     let password: string = "";
