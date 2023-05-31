@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { createUserWithEmailAndPassword } from "firebase/auth";
+    import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
     import { auth } from "../lib/auth"
 
     let email: string = "";
     let password: string = "";
 
-    function registerNewUser() {
+    function registerNewUser(): void {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -16,6 +16,12 @@
             });
     }
 
+    async function signInWithGoogle(): Promise<void> {
+        const provider = new GoogleAuthProvider();
+        signInWithRedirect(auth, provider).then((content) => {
+        });
+    }
+
 </script>
 
 <h1>KayVault</h1>
@@ -24,7 +30,7 @@
 <div class="container">
     <form>
         <div class="mb-3">
-            <a class="btn btn-light text-uppercase btn-outline" href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png">Signup Using Google</a>
+            <button class="btn btn-light text-uppercase btn-outline" on:click={signInWithGoogle}><img src="https://img.icons8.com/color/16/000000/google-logo.png">Signup Using Google</button>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
