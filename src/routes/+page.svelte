@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+    import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
     import { auth } from "../lib/auth"
 
     let email: string = "";
@@ -16,10 +16,25 @@
             });
     }
 
-    async function signInWithGoogle(): Promise<void> {
+    function loginUser(): void {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user
+                routeToSecrets()
+            })
+            .catch((error) => {
+                // email and password did not match
+            });
+    }
+
+    function signInWithGoogle(): void {
         const provider = new GoogleAuthProvider();
         signInWithRedirect(auth, provider).then((content) => {
         });
+    }
+
+    function routeToSecrets() {
+        window.location.href="/secrets"
     }
 
 </script>
@@ -45,7 +60,7 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Remember me</label>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" on:click={loginUser}>Login</button>
         <button type="submit" class="btn btn-secondary" on:click={registerNewUser}>Register</button>
     </form>
 </div>
