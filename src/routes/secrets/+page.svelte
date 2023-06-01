@@ -19,8 +19,8 @@
                 key: "something"
             })
         })
-            .then(resp => resp.json())
-            .then(body => data = { secrets: body })
+        .then(resp => resp.json())
+        .then(body => data = { secrets: body })
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -52,7 +52,7 @@
     </div>
     <div class="secrets">
         {#each shown as secret}
-            <p transition:fade="{{ duration: 200 }}">{secret}</p>
+            <p>{secret}</p>
         {/each}
     </div>
 </html>
