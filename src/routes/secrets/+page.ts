@@ -10,5 +10,5 @@ export const load = (async () => {
 
 
 async function getSecretsFromServer(): Promise<Response> {
-    return fetch("http://localhost:8080/secret")
+    return fetch("http://192.168.178.52:8080/secret")
 }

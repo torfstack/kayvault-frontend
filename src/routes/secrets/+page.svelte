@@ -7,7 +7,7 @@
     $: shown = data.secrets.filter((s: string) => s.indexOf(value) != -1)
 
     function uploadSecret(secret: string) {
-        fetch("http://localhost:8080/secret", {
+        fetch("http://192.168.178.52:8080/secret", {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
