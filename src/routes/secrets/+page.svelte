@@ -46,9 +46,11 @@
 </style>
 
 <html lang="en">
-    <h1>Manage your secrets</h1>
-    <div class="input">
-        <input bind:value type="text" placeholder="Add/Search Secrets" name="New Secret" on:keypress={handleKeydown}>
+    <h1 class="display-3">Manage your secrets</h1>
+    <div class="container-fluid">
+        <div class="input">
+            <input bind:value type="text" placeholder="Add/Search Secrets" name="New Secret" on:keypress={handleKeydown}>
+        </div>
     </div>
     <div class="secrets">
         {#each shown as secret}
