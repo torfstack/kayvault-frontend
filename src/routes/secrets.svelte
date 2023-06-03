@@ -24,20 +24,25 @@
     }
 
     function uploadSecret(secret: string) {
-        fetch("http://192.168.178.52:8080/secret", {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                value: secret,
-                key: "something"
+        let user = currentUser as UserCredential
+        return user.user.getIdTokenResult().then(async result => {
+            var token = result.token
+            fetch("http://192.168.178.52:8080/secret", {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                    value: secret,
+                    key: "something"
+                })
             })
+            .then(resp => resp.json())
+            .then(body => secrets = body)
         })
-        .then(resp => resp.json())
-        .then(body => secrets = body)
     }
 
     function handleKeydown(event: KeyboardEvent) {

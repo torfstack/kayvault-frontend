@@ -11,10 +11,3 @@
 {:else}
     <Login bind:currentUser/>
 {/if}
-
-<style>
-    input {
-        margin: 4pt;
-        padding: 4pt;
-    }
-</style>
