@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-    import { auth } from "../lib/auth"
+    import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+    import { auth } from "$lib/auth"
 
     let email: string = "";
     let password: string = "";
@@ -28,7 +28,7 @@
     }
 
     function signInWithGoogle(): void {
-        const provider = new GoogleAuthProvider();
+        const provider = new GoogleAuthProvider()
         signInWithPopup(auth, provider)
             .then((userCredential) => {
                 const user = userCredential.user

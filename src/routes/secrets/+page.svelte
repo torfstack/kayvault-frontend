@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types'
-    import { fade } from 'svelte/transition';
+    import { auth } from '$lib/auth'
+    import { signOut } from 'firebase/auth';
 
     export let data: PageData;
     let value: string = "";
@@ -28,6 +29,15 @@
             uploadSecret(value)
         }
     }
+
+    function logout() {
+        signOut(auth)
+        routeToLogin()
+    }
+
+    function routeToLogin() {
+        window.location.href = "/"
+    }
 </script>
 
 <style lang="scss">
@@ -48,7 +58,7 @@
 <html lang="en">
     <div class="p-3">
         <h1 class="display-3">Manage your secrets</h1>
-        <small class="text-body-secondary">Start typing to filter secrets or add new ones</small>
+        <small class="text-body-secondary">Start typing to filter secrets and add new ones, or <a on:click={logout}>logout</a></small>
 
         <div class="container-fluid">
             <div class="input">
