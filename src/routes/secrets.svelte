@@ -1,11 +1,27 @@
 <script lang="ts">
-    import type { PageData } from './$types'
     import { auth } from '$lib/auth'
-    import { signOut } from 'firebase/auth';
+    import type { UserCredential } from 'firebase/auth';
 
-    export let data: PageData;
+    export let currentUser: UserCredential | null
+
     let value: string = "";
-    $: shown = data.secrets.filter((s: string) => s.indexOf(value) != -1)
+    let secrets: string[] = []
+    $: shown = secrets.filter((s: string) => s.indexOf(value) != -1)
+
+    function getSecretsFromServer() {
+        let user = currentUser as UserCredential
+        return user.user.getIdTokenResult().then(async result => {
+            var token = result.token
+            return fetch("http://192.168.178.52:8080/secret", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+            .then(resp => resp.json())
+            .then(body => secrets = body)
+        });
+    }
 
     function uploadSecret(secret: string) {
         fetch("http://192.168.178.52:8080/secret", {
@@ -21,7 +37,7 @@
             })
         })
         .then(resp => resp.json())
-        .then(body => data = { secrets: body })
+        .then(body => secrets = body)
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -31,13 +47,11 @@
     }
 
     function logout() {
-        signOut(auth)
-        routeToLogin()
+        auth.signOut()
+        currentUser = null
     }
 
-    function routeToLogin() {
-        window.location.href = "/"
-    }
+    getSecretsFromServer()
 </script>
 
 <style lang="scss">

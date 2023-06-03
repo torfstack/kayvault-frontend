@@ -1,4 +1,7 @@
 import type { PageLoad } from './$types';
+import { userHandler } from '$lib/user';
+
+export const ssr = false;
 
 export const load = (async () => {
     const resp = await getSecretsFromServer()
@@ -10,5 +13,13 @@ export const load = (async () => {
 
 
 async function getSecretsFromServer(): Promise<Response> {
-    return fetch("http://192.168.178.52:8080/secret")
+    return userHandler.getCurrentUser().getIdTokenResult().then((result) => {
+        var token = result.token
+        return fetch("http://192.168.178.52:8080/secret", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+    });
 }
