@@ -10,12 +10,12 @@
 
     function getSecretsFromServer() {
         let user = currentUser as UserCredential
-        return user.user.getIdTokenResult().then(async result => {
-            var token = result.token
+        return user.user.getIdToken().then(async token => {
+            console.log(token)
             return fetch("http://192.168.178.52:8080/secret", {
                 method: "GET",
                 headers: {
-                    "Authorization": "Bearer " + token
+                    "Authorization": "Bearer" + token
                 }
             })
             .then(resp => resp.json())
@@ -25,15 +25,15 @@
 
     function uploadSecret(secret: string) {
         let user = currentUser as UserCredential
-        return user.user.getIdTokenResult().then(async result => {
-            var token = result.token
+        return user.user.getIdToken().then(async token => {
+            console.log(token)
             fetch("http://192.168.178.52:8080/secret", {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
+                    "Authorization": "Bearer" + token
                 },
                 body: JSON.stringify({
                     value: secret,
@@ -52,8 +52,8 @@
     }
 
     function logout() {
-        auth.signOut()
         currentUser = null
+        auth.signOut()
     }
 
     getSecretsFromServer()
