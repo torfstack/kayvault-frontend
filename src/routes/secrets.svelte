@@ -59,7 +59,7 @@
     getSecretsFromServer()
 </script>
 
-<style lang="scss">
+<style>
     input {
         width: 80%;
         padding: 12px 20px;
