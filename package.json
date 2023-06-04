@@ -36,6 +36,7 @@
     },
     "type": "module",
     "dependencies": {
+        "@types/bootstrap": "^5.2.6",
         "firebase": "^9.22.1"
     }
 }
