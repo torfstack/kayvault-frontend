@@ -1,5 +1,6 @@
 <script lang="ts">
     import { auth } from '$lib/auth'
+    import backendSecretsUrl from '$lib/config';
     import type { UserCredential } from 'firebase/auth';
 
     export let currentUser: UserCredential | null
@@ -23,7 +24,7 @@
         let user = currentUser as UserCredential
         return user.user.getIdToken().then(async token => {
             console.log(token)
-            return fetch("http://192.168.178.52:8080/secret", {
+            return fetch(backendSecretsUrl, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer" + token
@@ -40,7 +41,7 @@
         let user = currentUser as UserCredential
         return user.user.getIdToken().then(async token => {
             console.log(token)
-            fetch("http://192.168.178.52:8080/secret", {
+            fetch(backendSecretsUrl, {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
