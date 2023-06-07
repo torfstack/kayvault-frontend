@@ -47,7 +47,11 @@
     <div class="container border rounded bg-light p-3">
         <form>
             <div class="mb-3">
-                <button class="btn btn-secondary text-uppercase btn-outline" on:click={signInWithGoogle}><img src="https://img.icons8.com/color/16/000000/google-logo.png">Signup Using Google</button>
+                <button class="btn btn-secondary text-uppercase btn-outline" on:click={signInWithGoogle}>
+                    <div class="d-flex align-items-center">
+                        <img src="https://img.icons8.com/color/16/000000/google-logo.png">Signup Using Google
+                    </div>
+                </button>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
