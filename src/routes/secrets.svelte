@@ -9,8 +9,15 @@
     let inputValue: string = "";
     let inputUrl: string = "";
 
-    let secrets: string[] = []
-    $: shown = secrets.filter((s: string) => s.indexOf(filterValue) != -1)
+    class Secret {
+        key: string = ""
+        value: string = ""
+        url: string | undefined
+        notes: string | undefined
+    }
+
+    let secrets: Secret[] = []
+    $: shown = secrets.filter((s: Secret) => s.value.indexOf(filterValue) != -1)
 
     function getSecretsFromServer() {
         let user = currentUser as UserCredential
@@ -23,7 +30,9 @@
                 }
             })
             .then(resp => resp.json())
-            .then(body => secrets = body)
+            .then(body => {
+                secrets = body as Secret[]
+            })
         });
     }
 
@@ -41,7 +50,8 @@
                 },
                 body: JSON.stringify({
                     value: inputValue,
-                    key: "something"
+                    key: inputKey,
+                    url: inputUrl
                 })
             })
             .then(resp => resp.json())
@@ -126,7 +136,7 @@
             </div>
             <div class="secrets">
                 {#each shown as secret}
-                    <p>{secret}</p>
+                    <p>Name:{secret.key} Value:{secret.value}, Url:{secret.url}</p>
                 {/each}
             </div>
         </div>
