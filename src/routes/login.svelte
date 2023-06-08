@@ -37,14 +37,14 @@
     }
 </script>
 
-<div class="p-3">
+<div class="container p-3">
     <h1 class="display-3">KayVault</h1>
     <small class="text-body-secondary">Login or register to manage your secrets</small>
 
     <br>
     <br>
 
-    <div class="container border rounded bg-light p-3">
+    <div class="border rounded bg-light p-3">
         <form>
             <div class="mb-3">
                 <button class="btn btn-secondary text-uppercase btn-outline" on:click={signInWithGoogle}>
