@@ -122,8 +122,15 @@
         </div>
 
         <div class="p-3">
-            <h1 class="display-3">Manage your secrets</h1>
-            <small class="text-body-secondary">Start typing to filter secrets and add new ones, or <a on:click={logout}>logout</a></small>
+            <div class="row">
+                <div class="col-10">
+                    <h1 class="display-3">Manage your secrets</h1>
+                </div>
+                <div class="col-sm d-flex align-items-center">
+                    <button class="btn btn-info" on:click={logout}>Logout</button>
+                </div>
+            </div>
+            <small class="text-body-secondary">Start typing to filter secrets and add new ones</small>
 
             <div class="container text-center">
                 <div class="row">
