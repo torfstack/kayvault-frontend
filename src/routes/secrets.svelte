@@ -18,7 +18,16 @@
     }
 
     let secrets: Secret[] = []
-    $: shown = secrets.filter((s: Secret) => s.value.indexOf(filterValue) != -1)
+    $: shown = secrets.filter((s: Secret) => {
+        let trimmed = filterValue.trim()
+        const regex = /[A-Z]/
+        let hasOnlyLower = trimmed.match(regex) == null
+        if (hasOnlyLower) {
+            return s.value.toLowerCase().indexOf(trimmed) != -1
+        } else {
+            return s.value.indexOf(trimmed) != -1
+        }
+    })
 
     function getSecretsFromServer() {
         let user = currentUser as UserCredential
